@@ -33,6 +33,9 @@ redoxchess-engine/
 # Vite temp files
 vite.config.ts.timestamp-*.mjs
 
+# TypeScript build cache
+*.tsbuildinfo
+
 # OS files
 .DS_Store
 Thumbs.db
