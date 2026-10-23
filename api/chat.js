@@ -7,7 +7,7 @@
  * VITE_GEMINI_API_KEY - voir src/services/gemini.ts.
  */
 
-const MODEL = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
+const MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
 const ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models';
 
 /** Convertit un historique au format OpenAI vers le format Gemini. */

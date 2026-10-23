@@ -10,7 +10,7 @@
  */
 
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models';
-const DEFAULT_MODEL = 'gemini-3.8-flash';
+const DEFAULT_MODEL = 'gemini-3.5-flash';
 
 export interface ChatTurn {
   role: 'user' | 'assistant' | 'system';
