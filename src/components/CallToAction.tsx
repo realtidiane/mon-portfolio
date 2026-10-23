@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { FaWhatsapp, FaEnvelope } from "react-icons/fa6";
 import { config } from "../config";
 import "./styles/CallToAction.css";
+
+const whatsappUrl = `https://wa.me/${config.contact.whatsapp}?text=${encodeURIComponent(
+  config.contact.whatsappMessage
+)}`;
 
 const CallToAction = () => {
   return (
@@ -9,15 +14,25 @@ const CallToAction = () => {
         <Link to="/play" className="cta-btn cta-btn-play" data-cursor="disable">
           Play With Me →
         </Link>
-        
-        <a 
-          href={config.contact.linkedin} 
-          target="_blank" 
-          rel="noopener noreferrer" 
+
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           className="cta-btn cta-btn-hire"
           data-cursor="disable"
         >
-          Hire Me →
+          <FaWhatsapp className="cta-btn-icon" />
+          WhatsApp →
+        </a>
+
+        <a
+          href={`mailto:${config.contact.email}`}
+          className="cta-btn cta-btn-mail"
+          data-cursor="disable"
+        >
+          <FaEnvelope className="cta-btn-icon" />
+          Email
         </a>
       </div>
     </div>

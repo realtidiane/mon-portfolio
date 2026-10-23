@@ -109,6 +109,11 @@ export const config = {
         github: "https://github.com/realtidiane",
         linkedin: "https://www.linkedin.com/in/cheikh-tidiane-sy",
         phone: "+221 78 385 67 64",
+        // Numero au format international, sans "+" ni espaces (convention wa.me).
+        whatsapp: "221783856764",
+        // Message pre-rempli dans la discussion WhatsApp.
+        whatsappMessage:
+            "Bonjour Tidiane, je vous contacte depuis votre portfolio.",
         website: "https://tidiane.deadsec.tech"
     },
     skills: {
