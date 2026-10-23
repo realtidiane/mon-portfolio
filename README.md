@@ -2,7 +2,7 @@
 
 > **Administrateur Sécurité & Réseaux · Développeur Fullstack**
 > Diplômé en cybersécurité (EC2LT, 2023-2026) et en développement d'applications (UNCHK - IDA, 2022-2026).
-> Étudiant L3 Cybersécurité - École Supérieure Polytechnique de Dakar (2026-2027).
+> Diplômé en Licence Télécoms et Réseaux, option Cybersécurité (EC2LT, 2023-2026) - Licence IDA en cours (UNCHK, 2022-2026).
 
 [![React](https://img.shields.io/badge/React-18.3-blue?logo=react)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue?logo=typescript)](https://www.typescriptlang.org)
