@@ -42,7 +42,7 @@ function toGeminiPayload(turns: ChatTurn[]) {
     contents,
     generationConfig: {
       temperature: 0.7,
-      maxOutputTokens: 800,
+      maxOutputTokens: 2000,
     },
   };
 }
@@ -52,7 +52,15 @@ function extractText(data: any): string {
   const candidate = data?.candidates?.[0];
   const parts = candidate?.content?.parts;
   if (!Array.isArray(parts)) return '';
-  return parts.map((p: any) => p?.text ?? '').join('').trim();
+  let text = parts.map((p: any) => p?.text ?? '').join('').trim();
+
+  // Le modele a atteint la limite de tokens : on le signale plutot que de
+  // laisser une phrase coupee au milieu.
+  if (candidate?.finishReason === 'MAX_TOKENS' && !/[.!?]$/.test(text)) {
+    text += '\n\n_(reponse tronquee : demande plus de details pour la suite)_';
+  }
+
+  return text;
 }
 
 /** Proxy serveur : la cle est lue depuis les variables d'environnement de l'hebergeur. */
@@ -101,6 +109,14 @@ async function callDirect(turns: ChatTurn[]): Promise<string> {
 
   const data = await res.json();
   if (!res.ok) {
+    if (res.status === 429) {
+      throw new Error(
+        'QUOTA_EXHAUSTED: le quota gratuit Gemini est epuise pour aujourd hui. Reessayez dans quelques heures.'
+      );
+    }
+    if (res.status === 403) {
+      throw new Error('ACCESS_DENIED: la cle Gemini est refusee par l API.');
+    }
     throw new Error(data?.error?.message || `Gemini API error ${res.status}`);
   }
 

@@ -29,7 +29,7 @@ function toGeminiPayload(messages) {
         contents,
         generationConfig: {
             temperature: 0.7,
-            maxOutputTokens: 800,
+            maxOutputTokens: 2000,
         },
     };
 }
@@ -66,6 +66,19 @@ export default async function handler(req, res) {
             return res.status(response.status).json({
                 error: data?.error?.message || 'Failed to fetch from Gemini',
             });
+        }
+
+        // Signale une reponse tronquee par la limite de tokens plutot que de
+        // laisser une phrase coupee au milieu.
+        const candidate = data?.candidates?.[0];
+        if (candidate?.finishReason === 'MAX_TOKENS') {
+            const parts = candidate?.content?.parts || [];
+            const text = parts.map((p) => p.text ?? '').join('').trim();
+            if (text && !/[.!?]$/.test(text)) {
+                candidate.content.parts.push({
+                    text: '\n\n_(reponse tronquee : demande plus de details pour la suite)_',
+                });
+            }
         }
 
         return res.status(200).json(data);

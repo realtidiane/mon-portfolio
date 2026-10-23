@@ -677,6 +677,63 @@ body:has(.play-page) {
   border-bottom-left-radius: 4px;
 }
 
+/* Markdown rendu dans les messages du chat */
+.message-content > p {
+  margin: 0 0 8px;
+}
+
+.message-content > p:last-child {
+  margin-bottom: 0;
+}
+
+.message-content > ul,
+.message-content > ol {
+  margin: 4px 0 8px;
+  padding-left: 18px;
+}
+
+.message-content > ul:last-child,
+.message-content > ol:last-child {
+  margin-bottom: 0;
+}
+
+.message-content li {
+  margin-bottom: 4px;
+}
+
+.message-content li:last-child {
+  margin-bottom: 0;
+}
+
+.message-content strong {
+  color: var(--accentColor);
+  font-weight: 600;
+}
+
+.message-content code {
+  background: rgba(194, 164, 255, 0.14);
+  color: #d6c7ff;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-family: "Courier New", monospace;
+  font-size: 0.92em;
+}
+
+.message-content h3,
+.message-content h4,
+.message-content h5 {
+  margin: 10px 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.message-content hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin: 10px 0;
+}
+
 .message-content.typing {
   display: flex;
   gap: 4px;
