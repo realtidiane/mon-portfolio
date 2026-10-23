@@ -74,6 +74,16 @@ const Contact = () => {
               </a>
             </p>
             <p>
+              <a
+                href={`https://wa.me/${config.contact.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="disable"
+              >
+                WhatsApp
+              </a>
+            </p>
+            <p>
               <span>{config.social.location}</span>
             </p>
           </div>
