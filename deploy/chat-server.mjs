@@ -9,7 +9,15 @@
  * La cle GEMINI_API_KEY reste cote serveur, jamais dans le bundle.
  */
 import http from "node:http";
-import handler from "../api/chat.js";
+
+// Le handler est selon le contexte soit a cote du serveur (deploiement VPS),
+// soit dans api/ (structure du depot). On accepte les deux.
+let handler;
+try {
+    ({ default: handler } = await import("./chat.js"));
+} catch {
+    ({ default: handler } = await import("../api/chat.js"));
+}
 
 const PORT = Number(process.env.PORT || 8787);
 const HOST = process.env.HOST || "127.0.0.1";

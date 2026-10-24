@@ -25,9 +25,10 @@ tidiane.deadsec.tech {
 	header {
 		# blob: est necessaire pour :
 		#  - worker-src : le decodeur DRACO du modele 3D tourne dans un Worker
+		#  - connect-src: le modele chiffre est charge via fetch(blobUrl)
 		#  - media-src  : les videos au survol des cartes projet
 		#  - img-src    : les images de projets chargees en blob
-		Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; media-src 'self' blob:; worker-src 'self' blob:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'"
+		Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; media-src 'self' blob:; worker-src 'self' blob:; connect-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'"
 
 		Permissions-Policy "geolocation=(), microphone=(), camera=()"
 		Referrer-Policy "strict-origin-when-cross-origin"

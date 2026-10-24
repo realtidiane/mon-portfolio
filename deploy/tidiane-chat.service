@@ -8,7 +8,7 @@ Type=simple
 User=tidiane
 WorkingDirectory=/opt/tidiane-chat
 EnvironmentFile=/opt/tidiane-chat/.env
-ExecStart=/usr/bin/node /opt/tidiane-chat/chat-server.mjs
+ExecStart=/usr/local/bin/node /opt/tidiane-chat/chat-server.mjs
 Restart=always
 RestartSec=5
 # Le proxy n'ecoute que sur 127.0.0.1 : Caddy fait le reverse_proxy.
