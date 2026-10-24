@@ -8,7 +8,18 @@
  */
 
 const MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
+// Le free tier de Gemini est limite a 20 requetes/jour sur la famille
+// gemini-3.5/3.6-flash. Les modeles "lite" ont leur propre quota : on bascule
+// automatiquement dessus quand le quota du modele principal est epuise,
+// sinon le chat du portfolio devient inutilisable en fin de journee.
+const FALLBACK_MODEL = process.env.GEMINI_FALLBACK_MODEL || 'gemini-3.5-flash-lite';
 const ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models';
+
+/** L'erreur de quota free tier est-elle la cause du refus ? */
+function isQuotaError(data) {
+    const message = data?.error?.message || '';
+    return /quota|rate limit|resource_exhausted/i.test(message);
+}
 
 /** Convertit un historique au format OpenAI vers le format Gemini. */
 function toGeminiPayload(messages) {
@@ -49,8 +60,8 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'Messages must be a non-empty array' });
     }
 
-    try {
-        const response = await fetch(`${ENDPOINT}/${MODEL}:generateContent`, {
+    const callGemini = async (model) => {
+        const response = await fetch(`${ENDPOINT}/${model}:generateContent`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,8 +69,17 @@ export default async function handler(req, res) {
             },
             body: JSON.stringify(toGeminiPayload(messages)),
         });
+        return { response, data: await response.json() };
+    };
 
-        const data = await response.json();
+    try {
+        let { response, data } = await callGemini(MODEL);
+
+        // Quota du modele principal epuise -> on tente le modele de secours.
+        if (!response.ok && isQuotaError(data) && FALLBACK_MODEL && FALLBACK_MODEL !== MODEL) {
+            console.warn(`Quota epuise sur ${MODEL}, bascule sur ${FALLBACK_MODEL}`);
+            ({ response, data } = await callGemini(FALLBACK_MODEL));
+        }
 
         if (!response.ok) {
             console.error('Gemini API Error:', data);

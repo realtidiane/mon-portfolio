@@ -77,6 +77,7 @@ Le client (`src/services/gemini.ts`) essaie d'abord le proxy `/api/chat`, et bas
 > ⚠️ Sur un hébergement statique, `VITE_GEMINI_API_KEY` est visible dans le JavaScript du navigateur. Restreignez la clé par domaine (AI Studio → *API keys → Restrict key*) ou préférez un hébergement serverless.
 
 Le modèle par défaut est `gemini-3.5-flash`, modifiable via `GEMINI_MODEL` ou `VITE_GEMINI_MODEL`.
+Le free tier Gemini limite à **20 requêtes/jour** la famille `gemini-3.5/3.6-flash`. Le proxy bascule donc automatiquement sur `gemini-3.5-flash-lite` (quota distinct) quand Gemini refuse pour quota — voir `GEMINI_FALLBACK_MODEL`.
 
 ---
 

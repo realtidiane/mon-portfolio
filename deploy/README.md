@@ -73,6 +73,12 @@ sudo tail -20 /var/log/deploy-portfolio.log
   Recuperation : `sudo fail2ban-client set sshd unbanip <IP>`.
 - **Cache navigateur** - apres deploiement, le navigateur peut garder l'ancien bundle.
   `Ctrl+Shift+R` ou une fenetre privee.
+- **Quota Gemini** - le free tier limite `generate_content` a **20 requetes/jour** sur la
+  famille `gemini-3.5/3.6-flash` (meme quota pour les deux). Les modeles `lite` ont leur
+  propre quota : `api/chat.js` bascule automatiquement sur `gemini-3.5-flash-lite` quand
+  Gemini refuse la requete pour quota (log : `Quota epuise sur ..., bascule sur ...`).
+  Variables : `GEMINI_MODEL` (principal), `GEMINI_FALLBACK_MODEL` (secours).
+  Pour lever la limite : activer la facturation (pay-as-you-go) sur le projet AI Studio.
 - **Le chargement 3D est long sous GPU logiciel** - sans GPU (SwiftShader, machine virtuelle),
   `compileAsync` ne resout pas vite et l'ecran de chargement trainne. Sur une vraie machine
   avec GPU, c'est quelques secondes.
